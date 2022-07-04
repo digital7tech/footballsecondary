@@ -1,23 +1,33 @@
  [
         {
-            "name": "FOOTBALL ONE",
-          "description":"Studio Pierrot",
-            "img": "https://e0.365dm.com/22/06/2048x1152/skysports-gabriel-jesus-manchester-city_5794582.jpg"
+            "name": "Papers: Ronaldo to join Messi at PSG?",
+          "description":"TRANSFER NEWS LATEST",
+            "img": "https://e0.365dm.com/22/07/1600x900/skysports-cristiano-ronaldo_5821439.jpg?20220702170731"
         },
        {
-            "name": "FOOTBALL ONE",
-          "description":"Studio Pierrot",
+            "name": "Brentford are hopeful they will complete the signing of Aaron Hickey from Bologna on a long-term contract in the next 48 hours",
+          "description":"THE ATHLETIC",
+            "img": "https://e0.365dm.com/22/07/1600x900/skysports-hakim-ziyech-chelsea_5820964.jpg?20220702104252"
+        },
+        {
+            "name": "Arsenal signing Gabriel Jesus could be a lucky charm with goal record, while he scored as many in one game as Alexandre Lacazette managed all season",
+          "description":"ARSENAL NEWS",
             "img": "https://e0.365dm.com/22/06/2048x1152/skysports-gabriel-jesus-manchester-city_5794582.jpg"
         },
         {
-            "name": "FOOTBALL ONE",
-          "description":"Studio Pierrot",
-            "img": "https://e0.365dm.com/22/06/2048x1152/skysports-gabriel-jesus-manchester-city_5794582.jpg"
+            "name": "NEWS Barca enter race for Ronaldo, Eriksen agrees Man United move, Jesus joins Arsenal",
+          "description":"TRANSFER NEWS",
+            "img": "https://cdn.images.express.co.uk/img/dynamic/67/590x/Christian-Eriksen-Man-Utd-transfer-news-1221671.jpg?r=1577578166992"
         },
-        {
-            "name": "FOOTBALL ONE",
-          "description":"Studio Pierrot",
-            "img": "https://e0.365dm.com/22/06/2048x1152/skysports-gabriel-jesus-manchester-city_5794582.jpg"
-        }
+  {
+            "name": "GONE Chelsea told duo 'tough to replace' but Blues backed for trophy tilt if Boehly spends",
+          "description":"TRANSFER NEWS",
+            "img": "https://i2-prod.football.london/incoming/article18888758.ece/ALTERNATES/s1200/0_BeFunky-collage-30.jpg"
+        },
+  {
+            "name": "NEWS Barca enter race for Ronaldo, Eriksen agrees Man United move, Jesus joins Arsenal",
+          "description":"TRANSFER NEWS",
+            "img": "https://cdn.images.express.co.uk/img/dynamic/67/590x/Christian-Eriksen-Man-Utd-transfer-news-1221671.jpg?r=1577578166992"
+        },
 
     ]

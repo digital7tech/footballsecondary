@@ -1,38 +1,103 @@
-[
-        {
-            "headline": "Gianluca Scamacca: West Ham bid more than £34m for Sassuolo striker - Serie A side want £42.6m",
-          "news":"West Ham have made a bid of more than £34m for Sassuolo striker Gianluca Scamacca, but the Serie A side value the Italian at around £42.6m.Positive discussions are ongoing between the clubs over the 23-year-old, who scored 16 goals in 36 Serie A appearances last season for Sassuolo.",
-            "picture_url": "https://e0.365dm.com/22/06/1600x900/skysports-gianluca-scamacca_5794571.jpg?20220604090132"
-        },
-    {
-            "headline": "Marc Cucurella: Manchester City's £30m bid for Brighton left-back rejected",
-          "news":"Brighton have rejected a £30m bid for Marc Cucurella from Manchester City.The bid falls well short of Brighton's valuation of the player, which is understood to be £50m.The 23-year-old enjoyed a hugely successful first season in the Premier League after joining from Getafe in a deal worth around £15m last summer.Manchester City are looking to defend their Premier League title by strengthening in other areas after the arrival of Erling Haaland from Borussia Dortmund.",
-            "picture_url": "https://e0.365dm.com/22/07/1600x900/skysports-marc-cucurella-brighton_5835053.jpg?20220715105508"
-        },
+implementation 'com.google.firebase:firebase-config:21.0.2'
+apply plugin: 'com.google.gms.google-services'
+classpath 'com.google.gms:google-services:4.3.10'
 
-    {
-            "headline": "Ben Mee: Brentford agree terms for former Burnley captain on free transfer",
-          "news":"Ben Mee is a free agent after his Burnley contract expired this summer; the defender has agreed terms with Brentford and is now undergoing medical checks; Mee to leave Turf Moor after 11 years at the Championship club; the 32-year-old set to become Brentford's fourth major summer signingBen Mee is a free agent after his Burnley contract expired this summer; the defender has agreed terms with Brentford and is now undergoing medical checks; Mee to leave Turf Moor after 11 years at the Championship club; the 32-year-old set to become Brentford's fourth major summer signingBrentford have agreed terms with free agent Ben Mee after the former Burnley captain's contract expired this summer.The 32-year-old is undergoing medical checks with the Bees on Thursday ahead of a move that would end his 11 years at Burnley, who were relegated to the Championship last season.",
-            "picture_url": "https://e0.365dm.com/22/02/1600x900/skysports-ben-mee-burnley_5684013.jpg?20220721145206"
-        },
+-------------------------MainActivity.java-------------------------
+package in.bestapp.updateapp;
 
-    {
-            "headline": "Jules Kounde: Sevilla defender left out of pre-season training camp as Chelsea talks continue",
-          "news":"Jules Kounde has been left out of Sevilla's pre-season training camp in Portugal as Chelsea continue talks to sign the defender.Chelsea have had a verbal agreement with Kounde since June. He has been admired by Tuchel for some time, having been linked with the Blues in last summer's transfer window.Chelsea have signed Raheem Sterling and Kalidou Koulibaly this summer but Tuchel is keen to add another centre-back to his squad having lost Antonio Rudiger and Andreas Christensen to Real Madrid and Barcelona.",
-            "picture_url": "https://e0.365dm.com/22/04/1600x900/skysports-jules-kounde-sevilla_5751940.jpg?20220426113855"
-        },
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-    {
-            "headline": "Tuchel expects Broja to stay",
-          "news":"Thomas Tuchel has played down talk that Armando Broja is set to leave Chelsea on loan this summer.Broja excelled during a loan spell last season at Southampton but the indications are he will form part of Tuchel's plans this term.",
-            "picture_url": "https://e0.365dm.com/22/01/1600x900/skysports-broja-southampton_5647931.jpg?20220121092836"
-        },
- {
-            "headline": "Tottenham sign Spence in £20m deal",
-          "news":"Tottenham have signed Djed Spence from Middlesbrough on a five-year contract in a deal worth up to £20m.The right wing-back, who completed a medical at Hotspur Way on Friday, has signed until June 2027 after Spurs agreed a deal that will see them pay an initial £12.5m, with a further £7.5m coming in performance-related add-ons.",
-            "picture_url": "https://e0.365dm.com/22/07/1600x900/skysports-tottenham-djed-spence_5839060.jpg?20220719094940"
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+import java.util.HashMap;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView textCiewCurrentVersion;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textCiewCurrentVersion = findViewById(R.id.textView1);
+        textCiewCurrentVersion.setText("Current Version Code: " +getVersionCode());
+
+        HashMap<String, Object> defaultsRate = new HashMap<>();
+        defaultsRate.put("new_version_code", String.valueOf(getVersionCode()));
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(10) // change to 3600 on published app
+                .build();
+
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.setDefaultsAsync(defaultsRate);
+
+        mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+            @Override
+            public void onComplete(@NonNull Task<Boolean> task) {
+                if (task.isSuccessful()) {
+                    final String new_version_code = mFirebaseRemoteConfig.getString("new_version_code");
+
+                    if(Integer.parseInt(new_version_code) > getVersionCode())
+                        showTheDialog("com.facebook.lite", new_version_code );
+                }
+                else Log.e("MYLOG", "mFirebaseRemoteConfig.fetchAndActivate() NOT Successful");
+
+            }
+        });
+    }
+
+    private void showTheDialog(final String appPackageName, String versionFromRemoteConfig){
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Update")
+                .setMessage("This version is absolute, please update to version: "+versionFromRemoteConfig)
+                .setPositiveButton("UPDATE", null)
+                .show();
+
+        dialog.setCancelable(false);
+
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + appPackageName)));
+                }
+                catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+    }
+
+    private PackageInfo pInfo;
+    public int getVersionCode() {
+        pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.i("MYLOG", "NameNotFoundException: "+e.getMessage());
         }
-
-      
-
-    ]
+        return pInfo.versionCode;
+    }
+}
